@@ -2,12 +2,14 @@ import {useState,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { allUserRoute } from "../utils/APIRoutes";
 import Contacts from "../components/Contacts";
+import ChatContainer from "../components/ChatContainer";
 
 
 function Chat(){
 
     const [contacts,setContacts]=useState([]);
     const [currentUser,setCurrentUser]=useState("");
+    const [currentChat,setCurrentChat]=useState(undefined);
     const navigate=useNavigate();
 
     useEffect(()=>{
@@ -38,14 +40,21 @@ function Chat(){
             }
         }
     },[currentUser]);
-    return <div className="min-w-full h-screen flex flex-col justify-center gap-1 items-center bg-[#131324]">
-        <div className="w-5/6 h-5/6 bg-[#00000076] grid grid-cols-12">
-            <div className="col-span-3">
-                <Contacts contacts={contacts} currentUser={currentUser}/>
+
+
+
+    const handleChatChange=(chat)=>{
+        console.log(chat);
+        setCurrentChat(chat);
+    }
+    return <div className="min-w-full h-screen flex flex-col justify-center gap-1 items-center bg-[#10b981] pt-8 pb-2 px-4 grid grid-rows-12">
+        <div className="w-full h-5/6 bg-white grid grid-cols-12 row-span-10">
+            <div className="col-span-3 relative h-full overflow-hidden">
+                <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange}/>
             </div>
 
-            <div className="col-span-9">
-
+            <div className="col-span-9 h-full">
+                {currentChat && <ChatContainer currentChat={currentChat} currentUser={currentUser}/>}
             </div>
         </div>
     </div>
