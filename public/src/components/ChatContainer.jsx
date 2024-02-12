@@ -6,7 +6,7 @@ import { useEffect,useState } from "react";
 
 
 
-function ChatContainer({currentChat,currentUser}){
+function ChatContainer({currentChat,currentUser,socket}){
 
     const [messages,setMessages]=useState([]);
 
@@ -17,13 +17,25 @@ function ChatContainer({currentChat,currentUser}){
             to:currentChat._id
         })
         .then(({data})=>{
-            console.log(data.result);
+           // console.log(data.result);
             setMessages(data.result);
         })
         .catch((err)=>{
             console.log("error occured while fetching messages");
         })
     },[currentChat]);
+
+    useEffect(()=>{
+        socket.current.on("msg-receive",(msg)=>{
+           setMessages((prev)=>{
+            return [...prev,{
+                fromSelf:false,
+                message:msg.msg
+            }]
+           })
+            })
+       
+    },[]);
 
 
     const addChat=async (msg)=>{
@@ -34,17 +46,27 @@ function ChatContainer({currentChat,currentUser}){
         })
 
         if(data.status){
-            alert("success");
+            
+            setMessages((prev)=>{
+                return [...messages,{fromSelf:true,message:msg}];
+            });
+
+            socket.current.emit("send-msg",{
+                to:currentChat._id,
+                from:currentUser._id,
+                msg,
+                receiver:currentChat.username
+            });
         }else{
             alert("failed");
         }
     }
 
 
-    return <div className="w-full row-span-12 border-l-2 border-gray-600 h-full relative overflow-auto">
+    return <div className="w-full border-l-2 border-gray-600 flex flex-col pb-0 subcontainer2">
 
         {/* chat header */}
-        <div className="w-full grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0]">
+        <div className="w-full h-[10%] grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0]">
             <img
             src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
             alt="current chat image"
@@ -57,18 +79,18 @@ function ChatContainer({currentChat,currentUser}){
         </div>
 
         {/* chat messages */}
-        <div className="w-full flex flex-col justify-start h-[80%]">
+        <div className="w-full flex flex-col justify-start overflow-auto">
             {
                 messages.map((message)=>{
-                    return <div className={`flex w-full ${message.fromSelf?'justify-end':'justify-start'} py-2 px-4 text-xl`}>
-                        {message.message}
+                    return <div className={`flex w-full ${message.fromSelf?'justify-end':'justify-start'} py-2 px-4 text-xl my-2`}>
+                        <div className="text-left shadow-md px-4 py-2 border-none rounded-md">{message.message}</div>
                     </div>
                 })
             }
         </div>
 
         {/* chat input */}
-        <div className="w-full row-span-1">
+        <div className="w-full">
             <ChatInput addChat={addChat}/>
         </div>
         </div>
