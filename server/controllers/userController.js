@@ -53,7 +53,7 @@ module.exports.login=async (req,res,next)=>{
                 return res.json({message:"Either email or password is not valid",status:false});
             }else{
                 delete user.password;
-                console.log(user);
+                
                 return res.json({status:true,user});
             }
         }
@@ -74,7 +74,7 @@ module.exports.setAvatar=async (req,res,next)=>{
             avatarImage:image
         });
 
-        console.log(user);
+        
 
         return res.json({isSet:user.isAvatarImageSet,image:user.avatarImage});
     }catch(error){

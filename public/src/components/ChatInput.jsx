@@ -17,7 +17,7 @@ function ChatInput({addChat}){
     }
 
     return <div>
-        {showPicker && <div className="relative left-4 bottom-4">
+        {showPicker && <div className="absolute left-4 bottom-40">
             <EmojiPicker setEmoji={setText} setShowPicker={setShowPicker} />
             </div>}
         <div className="w-full py-2 px-4 bg-[#cbd5e1] ">
