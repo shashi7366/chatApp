@@ -37,7 +37,7 @@ const server=app.listen(process.env.PORT,()=>{
 
 const io=socket(server,{
     cors:{
-        origin:"https://automatic-doodle-7gjp7rqp4xhrwxx-5173.app.github.dev/",
+        origin:"*",
     }
 });
 
@@ -51,11 +51,11 @@ io.on("connection",(socket)=>{
     })
 
     socket.on("send-msg",(data)=>{
-        console.log(data);
+        
         const sendUserSocket=onlineUsers.get(data.to);
     
         if(sendUserSocket){
-            console.log(data.receiver);
+            
             socket.to(sendUserSocket).emit("msg-receive",{msg:data.msg,receiver:data.receiver})
         }
     })

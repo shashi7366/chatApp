@@ -57,12 +57,12 @@ function Chat(){
         setCurrentChat(chat);
     }
     return <div className="min-w-full flex flex-col justify-center gap-1 items-center bg-[#10b981]  px-4 container">
-        <div className="w-full  bg-white grid grid-cols-12 overflow-hidden subContainer1">
-            <div className="col-span-3 relative h-full overflow-hidden">
+        <div className="w-full  h-full bg-white grid grid-cols-12 subContainer1">
+            <div className="col-span-3 relative h-full overflow-auto">
                 <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange}/>
             </div>
 
-            <div className="col-span-9">
+            <div className="col-span-9 h-full overflow-auto">
                 {currentChat && <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket}/>}
             </div>
         </div>
