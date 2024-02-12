@@ -47,8 +47,8 @@ function Chat(){
         console.log(chat);
         setCurrentChat(chat);
     }
-    return <div className="min-w-full h-screen flex flex-col justify-center gap-1 items-center bg-[#10b981] pt-8 pb-2 px-4 grid grid-rows-12">
-        <div className="w-full h-5/6 bg-white grid grid-cols-12 row-span-10">
+    return <div className="min-w-full h-screen flex flex-col justify-center gap-1 items-center bg-[#10b981]">
+        <div className="w-full h-[90%] bg-white grid grid-cols-12 row-span-10">
             <div className="col-span-3 relative h-full overflow-hidden">
                 <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange}/>
             </div>

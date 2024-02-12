@@ -41,10 +41,10 @@ function ChatContainer({currentChat,currentUser}){
     }
 
 
-    return <div className="w-full grid grid-rows-12 border-l-2 border-gray-600 h-full relative">
+    return <div className="w-full row-span-12 border-l-2 border-gray-600 h-full relative overflow-auto">
 
         {/* chat header */}
-        <div className="w-full grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0] row-span-1">
+        <div className="w-full grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0]">
             <img
             src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
             alt="current chat image"
@@ -57,7 +57,7 @@ function ChatContainer({currentChat,currentUser}){
         </div>
 
         {/* chat messages */}
-        <div className="w-full flex flex-col justify-start row-span-10">
+        <div className="w-full flex flex-col justify-start h-[80%]">
             {
                 messages.map((message)=>{
                     return <div className={`flex w-full ${message.fromSelf?'justify-end':'justify-start'} py-2 px-4 text-xl`}>
