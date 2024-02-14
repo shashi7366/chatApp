@@ -56,15 +56,15 @@ function Chat(){
         console.log(chat);
         setCurrentChat(chat);
     }
-    return <div className="min-w-full flex flex-col justify-center gap-1 items-center bg-[#10b981]  px-4 container">
-        <div className="w-full  h-full bg-white grid grid-cols-12 subContainer1">
-            <div className="col-span-3 relative h-full overflow-auto">
+    return <div className="min-w-full h-screen max-h-screen flex flex-col justify-center gap-1 items-center bg-[#10b981] px-4">
+        <div className="w-full  h-[90%] max-h-[90%] bg-white grid grid-cols-12 grid-rows-1">
+            
                 <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange}/>
-            </div>
+            
 
-            <div className="col-span-9 h-full overflow-auto">
+           
                 {currentChat && <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket}/>}
-            </div>
+            
         </div>
     </div>
 }

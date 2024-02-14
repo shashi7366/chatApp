@@ -2,16 +2,18 @@ import ChatInput from "./ChatInput";
 import Logout from "./Logout";
 import { addMessageRoute,getAllMessagesRoute} from "../utils/APIRoutes";
 import axios from "axios";
-import { useEffect,useState } from "react";
+import { useEffect,useState,useRef} from "react";
 
 
 
 function ChatContainer({currentChat,currentUser,socket}){
 
     const [messages,setMessages]=useState([]);
+    const scrollRef=useRef();
 
 
     useEffect(()=>{
+        setMessages([]);
         axios.post(`${getAllMessagesRoute}`,{
             from:currentUser._id,
             to:currentChat._id
@@ -36,6 +38,10 @@ function ChatContainer({currentChat,currentUser,socket}){
             })
        
     },[]);
+
+    useEffect(()=>{
+        scrollRef.current?.scrollIntoView({behavior:"smooth"});
+    },[messages]);
 
 
     const addChat=async (msg)=>{
@@ -63,7 +69,7 @@ function ChatContainer({currentChat,currentUser,socket}){
     }
 
 
-    return <div className="w-full h-full border-l-2 border-gray-600 flex flex-col pb-0 subcontainer2 relative">
+    return <div className="h-full col-span-8 row-span-1 border-l-2 border-gray-600 flex flex-col pb-0 subcontainer2 relative">
 
         {/* chat header */}
         <div className="w-full h-[10%] grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0] absolute top-0">
@@ -82,8 +88,8 @@ function ChatContainer({currentChat,currentUser,socket}){
         <div className="w-full h-full flex flex-col justify-start overflow-auto">
             {
                 messages.map((message)=>{
-                    return <div className={`flex w-full ${message.fromSelf?'justify-end':'justify-start'} py-2 px-4 text-xl my-2`}>
-                        <div className="text-left shadow-md px-4 py-2 border-none rounded-md">{message.message}</div>
+                    return <div ref={scrollRef} className={`flex w-full ${message.fromSelf?'justify-end':'justify-start'} py-2 px-4 text-xl my-2`}>
+                        <div className={`text-left shadow-md px-4 py-2 border-none rounded-md ${message.fromSelf?'bg-green-300':''}`}>{message.message}</div>
                     </div>
                 })
             }

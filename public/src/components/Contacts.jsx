@@ -16,7 +16,7 @@ export default function Contacts({ contacts, currentUser,changeChat }) {
     const changeCurrentChat = (index, contact) => { }
 
 
-    return  <div className="w-full h-full overflow-auto relative">
+    return  <div className="w-full h-full max-h-full row-span-1 col-span-4 overflow-auto relative">
 
             {/* currentUser div */}
             <div className="w-full grid grid-cols-6 p-2 bg-[#e2e8f0] sticky top-0">
