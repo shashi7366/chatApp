@@ -1,12 +1,13 @@
 import ChatInput from "./ChatInput";
-import Logout from "./Logout";
+import { FaArrowLeft } from "react-icons/fa";
 import { addMessageRoute,getAllMessagesRoute} from "../utils/APIRoutes";
 import axios from "axios";
 import { useEffect,useState,useRef} from "react";
 
 
 
-function ChatContainer({currentChat,currentUser,socket}){
+
+function ChatContainer({currentChat,currentUser,socket,changeChat}){
 
     const [messages,setMessages]=useState([]);
     const scrollRef=useRef();
@@ -69,10 +70,13 @@ function ChatContainer({currentChat,currentUser,socket}){
     }
 
 
-    return <div className="h-full col-span-8 row-span-1 border-l-2 border-gray-600 flex flex-col pb-0 subcontainer2 relative">
+    return <div className="h-full col-span-12 sm:col-span-8 row-span-1 border-l-2 border-gray-600 flex flex-col pb-0 subcontainer2 relative">
 
         {/* chat header */}
         <div className="w-full h-[10%] grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0] absolute top-0">
+            <FaArrowLeft onClick={()=>{
+                changeChat(null);
+            }}/>
             <img
             src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
             alt="current chat image"
@@ -80,7 +84,7 @@ function ChatContainer({currentChat,currentUser,socket}){
 
             <h1 className="text-2xl col-span-1">{currentChat.username}</h1>
             <span className="col-span-9"></span>
-            <div className="col-span-1"><Logout/></div>
+            
 
         </div>
 
