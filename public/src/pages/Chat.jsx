@@ -9,11 +9,12 @@ import ChatContainer from "../components/ChatContainer";
 
 function Chat() {
 
-    const [contacts, setContacts] = useState([]);
-    const [currentUser, setCurrentUser] = useState("");
-    const [currentChat, setCurrentChat] = useState(undefined);
-    const navigate = useNavigate();
-    const socket = useRef();
+    const [contacts,setContacts]=useState([]);
+    const [currentUser,setCurrentUser]=useState("");
+    const [small,setSmall]=useState(true);
+    const [currentChat,setCurrentChat]=useState(undefined);
+    const navigate=useNavigate();
+    const socket=useRef();
 
     useEffect(() => {
         if (!localStorage.getItem("chat-app-user")) {
@@ -51,14 +52,43 @@ function Chat() {
     }, [currentUser]);
 
 
+    useEffect(()=>{
 
-    const handleChatChange = (chat) => {
-        console.log(chat);
+        if(window.innerWidth>640){
+            setSmall(false);
+        }else{
+            setSmall(true);
+        }
+
+        function adjustChat(){
+            if(window.innerWidth>640){
+                setSmall(false);
+            }else{
+                setSmall(true);
+            }
+        }
+        window.addEventListener("resize",adjustChat);
+
+        return ()=>{
+            window.removeEventListener("resize",adjustChat);
+        }
+    },[])
+
+
+
+    const handleChatChange=(chat)=>{
+       // console.log(chat);
         setCurrentChat(chat);
     }
-    return <div className="w-full bg-white grid grid-cols-12 overflow-auto">
-        <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} />
-        {currentChat && <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} />}
+    return <div className="min-w-full h-screen max-h-screen flex flex-col justify-center gap-1 items-center bg-[#10b981] px-4">
+        <div className="w-full  h-[90%] max-h-[90%] bg-white grid grid-cols-12 grid-rows-1">
+            
+                {!(small && currentChat) && <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange}/>}
+        
+           
+                {currentChat && <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} changeChat={handleChatChange}/>}
+            
+        </div>
     </div>
 
 }

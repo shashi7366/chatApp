@@ -1,17 +1,20 @@
 import ChatInput from "./ChatInput";
-import Logout from "./Logout";
+import { FaArrowLeft } from "react-icons/fa";
 import { addMessageRoute,getAllMessagesRoute} from "../utils/APIRoutes";
 import axios from "axios";
-import { useEffect,useState } from "react";
+import { useEffect,useState,useRef} from "react";
 
 
 
-function ChatContainer({currentChat,currentUser,socket}){
+
+function ChatContainer({currentChat,currentUser,socket,changeChat}){
 
     const [messages,setMessages]=useState([]);
+    const scrollRef=useRef();
 
 
     useEffect(()=>{
+        setMessages([]);
         axios.post(`${getAllMessagesRoute}`,{
             from:currentUser._id,
             to:currentChat._id
@@ -36,6 +39,10 @@ function ChatContainer({currentChat,currentUser,socket}){
             })
        
     },[]);
+
+    useEffect(()=>{
+        scrollRef.current?.scrollIntoView({behavior:"smooth"});
+    },[messages]);
 
 
     const addChat=async (msg)=>{
@@ -63,10 +70,13 @@ function ChatContainer({currentChat,currentUser,socket}){
     }
 
 
-    return <div className="col-span-8 h-full">
+    return <div className="h-full col-span-12 sm:col-span-8 row-span-1 border-l-2 border-gray-600 flex flex-col pb-0 subcontainer2 relative">
 
         {/* chat header */}
-        <div className="w-full grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0] absolute top-0">
+        <div className="w-full h-[10%] grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0] absolute top-0">
+            <FaArrowLeft onClick={()=>{
+                changeChat(null);
+            }}/>
             <img
             src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
             alt="current chat image"
@@ -74,7 +84,7 @@ function ChatContainer({currentChat,currentUser,socket}){
 
             <h1 className="text-2xl col-span-1">{currentChat.username}</h1>
             <span className="col-span-9"></span>
-            <div className="col-span-1"><Logout/></div>
+            
 
         </div>
 
@@ -82,8 +92,8 @@ function ChatContainer({currentChat,currentUser,socket}){
         <div className="h-[90%] w-full flex flex-col justify-start overflow-auto">
             {
                 messages.map((message)=>{
-                    return <div className={`flex w-full ${message.fromSelf?'justify-end':'justify-start'} py-2 px-4 text-xl my-2`}>
-                        <div className="text-left shadow-md px-4 py-2 border-none rounded-md">{message.message}</div>
+                    return <div ref={scrollRef} className={`flex w-full ${message.fromSelf?'justify-end':'justify-start'} py-2 px-4 text-xl my-2`}>
+                        <div className={`text-left shadow-md px-4 py-2 border-none rounded-md ${message.fromSelf?'bg-green-300':''}`}>{message.message}</div>
                     </div>
                 })
             }
