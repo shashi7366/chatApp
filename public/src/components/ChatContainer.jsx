@@ -80,10 +80,10 @@ function ChatContainer({currentChat,currentUser,socket,changeChat}){
             <img
             src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
             alt="current chat image"
-            className="col-span-1 h-12"/>
+            className="col-span-2 h-12"/>
 
             <h1 className="text-2xl col-span-1">{currentChat.username}</h1>
-            <span className="col-span-9"></span>
+            <span className="col-span-8"></span>
             
 
         </div>

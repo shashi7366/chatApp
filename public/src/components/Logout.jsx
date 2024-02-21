@@ -8,7 +8,7 @@ function Logout(){
 
     const handleClick=async ()=>{
         localStorage.clear();
-        naviagte("/login");
+        naviagte("/");
     }
 
     return <button onClick={()=>{handleClick()}}><BiPowerOff className="w-full h-8 text-red-600"/></button>
