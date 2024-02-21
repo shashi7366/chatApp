@@ -63,10 +63,10 @@ function ChatContainer({currentChat,currentUser,socket}){
     }
 
 
-    return <div className="w-full h-full border-l-2 border-gray-600 flex flex-col pb-0 subcontainer2 relative">
+    return <div className="col-span-8 h-full">
 
         {/* chat header */}
-        <div className="w-full h-[10%] grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0] absolute top-0">
+        <div className="w-full grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0] absolute top-0">
             <img
             src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
             alt="current chat image"
@@ -79,7 +79,7 @@ function ChatContainer({currentChat,currentUser,socket}){
         </div>
 
         {/* chat messages */}
-        <div className="w-full h-full flex flex-col justify-start overflow-auto">
+        <div className="h-[90%] w-full flex flex-col justify-start overflow-auto">
             {
                 messages.map((message)=>{
                     return <div className={`flex w-full ${message.fromSelf?'justify-end':'justify-start'} py-2 px-4 text-xl my-2`}>
@@ -90,9 +90,9 @@ function ChatContainer({currentChat,currentUser,socket}){
         </div>
 
         {/* chat input */}
-        <div className="w-full">
+        
             <ChatInput addChat={addChat}/>
-        </div>
+        
         </div>
 }
 

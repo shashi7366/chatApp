@@ -16,13 +16,13 @@ function ChatInput({addChat}){
         }
     }
 
-    return <div>
+    return <div className="">
         {showPicker && <div className="absolute left-4 bottom-40">
             <EmojiPicker setEmoji={setText} setShowPicker={setShowPicker} />
             </div>}
         <div className="w-full py-2 px-4 bg-[#cbd5e1] ">
         
-        <div className=" w-full h-[10%] border-none rounded-md grid grid-cols-12 items-center">
+        <div className=" w-full border-none rounded-md grid grid-cols-12 items-center">
             <BsEmojiSmileFill className="col-span-1 h-8 w-full" onClick={()=>{setShowPicker(!showPicker)}}/>
         <input type="text"
         className="h-10 col-span-10 bg-[#f8fafc] border-none rounded-md px-4 py-2"
