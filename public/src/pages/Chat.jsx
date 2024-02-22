@@ -80,7 +80,7 @@ function Chat(){
        // console.log(chat);
         setCurrentChat(chat);
     }
-    return <div className="min-w-full h-screen max-h-screen flex flex-col justify-center gap-1 items-center bg-[#10b981]">
+    return <div className="min-w-full h-dvh max-h-[90%] flex flex-col justify-center gap-1 items-center bg-[#10b981]">
         <div className="w-full  h-[98%] max-h-[98%] bg-white grid grid-cols-12 grid-rows-1">
             
                 {!(small && currentChat) && <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange}/>}
