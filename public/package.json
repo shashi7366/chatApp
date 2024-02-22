@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "appwrite": "^14.0.0-rc.5",
     "axios": "^1.6.7",
     "buffer": "^6.0.3",
     "emoji-picker-react": "^4.7.12",

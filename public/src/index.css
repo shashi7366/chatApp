@@ -12,7 +12,7 @@ box-sizing: border-box;
 }
 
 
-body,button,input{
+h1,button,input{
 font-family: 'Josefin Sans', sans-serif;
 
 }
@@ -45,6 +45,14 @@ overflow: hidden;
     height:100%;
 }
 
+
+.lpContainer{
+    background-image:linear-gradient(#12aa81,#11d7a2),linear-gradient(#ffffff,#ffffff);
+    background-origin: border-box;
+    background-position:top 0%,top 60%;
+    background-size:100% 20%,100%;
+    background-repeat: no-repeat;
+}
 
 
 
