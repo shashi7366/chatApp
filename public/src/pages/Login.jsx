@@ -75,7 +75,7 @@ function Login() {
 
 
     return <div className="lpContainer w-full h-screen flex flex-col justify-center">
-        <div className="w-[80%] m-auto">
+        <div className="w-[80%] sm:w-[40%] m-auto">
         <ToastContainer/>
         
         <form 
@@ -100,7 +100,7 @@ function Login() {
             />
 
             
-            <button type="submit" className="bg-green-300 px-4 py-2 border rounded-md my-2">Login</button>
+            <button type="submit" className="bg-green-300 px-4 py-2 border rounded-md my-2 hover:transform hover:scale-125">Login</button>
             <span>Don't have an account ? <Link to="/register" className="text-blue-600">Register</Link></span>
         </form>
         

@@ -70,7 +70,7 @@ function ChatContainer({currentChat,currentUser,socket,changeChat}){
     }
 
 
-    return <div className="h-full col-span-12 sm:col-span-8 row-span-1 border-l-2 border-gray-600 flex flex-col pb-0 subcontainer2 relative">
+    return <div className="h-full col-span-12 sm:col-span-8 row-span-1 border-l-2 border-gray-600 flex flex-col justify-between pb-0 subcontainer2 relative">
 
         {/* chat header */}
         <div className="w-full h-[10%] grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0] absolute top-0">
@@ -80,7 +80,7 @@ function ChatContainer({currentChat,currentUser,socket,changeChat}){
             <img
             src={`data:image/svg+xml;base64,${currentChat.avatarImage}`}
             alt="current chat image"
-            className="col-span-2 h-12"/>
+            className="col-span-2 sm:col-span-1 h-12"/>
 
             <h1 className="text-2xl col-span-1">{currentChat.username}</h1>
             <span className="col-span-8"></span>
@@ -89,7 +89,7 @@ function ChatContainer({currentChat,currentUser,socket,changeChat}){
         </div>
 
         {/* chat messages */}
-        <div className="w-full h-full flex flex-col justify-start overflow-auto">
+        <div className="w-full min-h-[85%] flex flex-col justify-start overflow-auto">
             {
                 messages.map((message)=>{
                     return <div ref={scrollRef} className={`flex w-full ${message.fromSelf?'justify-end':'justify-start'} py-2 px-4 text-xl my-2`}>
