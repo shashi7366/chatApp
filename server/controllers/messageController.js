@@ -29,17 +29,21 @@ module.exports.getAllMessages=async (req,res,next)=>{
 
      const {to,from}=req.body;
 
-    const matched=await Message.find({users:{$all:[from,to]}});
+    
+
+    const matched=await Message.find({users:{$all:[from,to]}}).sort("createdAt");
 
     
 
     
 
     const result=matched.map((match)=>{
-       // console.log(match);
+        //console.log(match);
         return {
            fromSelf:(match.sender).toString()===from,
-           message:match.message.text
+           message:match.message.text,
+           date:`${match.createdAt.getDate()}-${match.createdAt.getMonth()+1}-${match.createdAt.getFullYear()}`,
+           time:`${match.createdAt.getHours()}:${match.createdAt.getMinutes()}`
         }
     })
 
