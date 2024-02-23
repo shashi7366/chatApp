@@ -1,7 +1,7 @@
 
 function Message({message,time,align,image}){
 
-    console.log(align);
+   // console.log(align);
 
     return <div className="grid grid-cols-12 grid-rows-2 min-w-[40%] gap-2">
         {align=="left"?<div className="col-span-2 row-span-2">

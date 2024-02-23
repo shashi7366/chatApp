@@ -21,7 +21,7 @@ function ChatContainer({currentChat,currentUser,socket,changeChat}){
             to:currentChat._id
         })
         .then(({data})=>{
-            console.log(data.result);
+          //  console.log(data.result);
             setMessages(data.result);
         })
         .catch((err)=>{
