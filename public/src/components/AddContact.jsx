@@ -36,7 +36,7 @@ function AddContact({setShowAddContact}){
         .then((res)=>{
             console.log(res);
           //  user.contacts.push(id);
-          localStorage.setItem('chat-app-user',res.data.user);
+          localStorage.setItem('chat-app-user',JSON.stringify(res.data.user));
             dispatch(fetchContacts([...user.contacts,id]));
         }).catch((err)=>{
             console.log(err);
