@@ -116,7 +116,7 @@ module.exports.addContact=async (req,res,next)=>{
         user.contacts.push(contactId);
         await user.save();
 
-        res.json({status:true,message:"contact added successfully"});
+        res.json({status:true,user});
     }catch(exp){
         next(exp);
     }
