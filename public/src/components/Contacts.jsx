@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import Logout from "./Logout";
+import AddContactButton from "./AddContactButton";
+import {  useSelector } from "react-redux";
 
-export default function Contacts({ contacts, currentUser,changeChat }) {
+export default function Contacts({  currentUser,changeChat,setShowAddContact}) {
 
     const [currentUserName, setCurrentUserName] = useState(undefined);
     const [currentUserImage, setCurrentUserImage] = useState(undefined);
     const [currentlySelected, setCurrentlySelected] = useState(undefined);
+    let contactsFromStore=useSelector((state)=>{
+        return state.contacts.contactDetails;
+    })
 
     useEffect(() => {
         if (currentUser) {
@@ -17,6 +22,9 @@ export default function Contacts({ contacts, currentUser,changeChat }) {
     const changeCurrentChat = (index, contact) => { }
 
 
+    console.log(contactsFromStore);
+
+
     return  <div className="w-full h-full max-h-full row-span-1 col-span-12 sm:col-span-4 overflow-auto relative">
 
             {/* currentUser div */}
@@ -26,12 +34,13 @@ export default function Contacts({ contacts, currentUser,changeChat }) {
                 <div className="col-span-1"><Logout/></div>
             </div>
 
+            <AddContactButton setShowAddContact={setShowAddContact}/>
             {/* All contacts */}
 
             <div className="">
                 {
-                    contacts.map((contact,index) => {
-                        return <div className={`w-full grid grid-cols-6 py-2 px-4 gap-4 items-center border border-b-2 ${currentlySelected==index?"bg-[#f3f4f6]":"bg-white"} hover:bg-gray-100`}
+                    contactsFromStore.map((contact,index) => {
+                        return <div key={index} className={`w-full grid grid-cols-6 py-2 px-4 gap-4 items-center border border-b-2 ${currentlySelected==index?"bg-[#f3f4f6]":"bg-white"} hover:bg-gray-100 h-[10%]`}
                         onClick={()=>{setCurrentlySelected(index);changeChat(contact)}}>
                             <img src={`data:image/svg+xml;base64,${contact.avatarImage}`} alt="contact's image" className="col-span-1" />
                             <h2 className="text-xl">{contact.username}</h2>
