@@ -8,6 +8,10 @@ import ChatContainer from "../components/ChatContainer";
 import axios from "axios";
 
 
+import {useDispatch,useSelector} from "react-redux";
+import {fetchContacts,updateUser} from "../feature/contactSlice";
+
+
 
 function Chat(){
 
@@ -19,11 +23,17 @@ function Chat(){
     const navigate=useNavigate();
     const socket=useRef();
 
+    const dispatch=useDispatch();
+    // let contactsFromStore=useSelector((state)=>{
+    //     return state.contacts.contactDetails;
+    // });
+
     useEffect(()=>{
         if(!localStorage.getItem("chat-app-user")){
             navigate("/login");
         }else{
             setCurrentUser(JSON.parse(localStorage.getItem("chat-app-user")));
+            dispatch(updateUser(JSON.parse(localStorage.getItem("chat-app-user"))));
         }
     },[]);
 
@@ -39,15 +49,19 @@ function Chat(){
         if(currentUser){
             if(currentUser.isAvatarImageSet){
                 // fetch(`${allUserRoute}/${currentUser._id}`)
-                axios.post(getAllContacts,{
-                    contacts:currentUser.contacts
-                })
-                .then(({data})=>{
-                    setContacts(data.users);
-                })
-                .catch((error)=>{
-                    console.log("error in chat.jsx ",error.message);
-                })
+                // axios.post(getAllContacts,{
+                //     contacts:currentUser.contacts
+                // })
+                // .then(({data})=>{
+                //     setContacts(data.users);
+                // })
+                // .catch((error)=>{
+                //     console.log("error in chat.jsx ",error.message);
+                // })
+
+                dispatch(fetchContacts(currentUser.contacts));
+                //dispatch(updateContacts(contactsFromStore));
+
             }else{
                 navigate("/setAvatar");
             }
@@ -87,7 +101,7 @@ function Chat(){
         {showAddContact && <AddContact setShowAddContact={setShowAddContact}/>}
         <div className="w-full  h-[98%] max-h-[98%] bg-white grid grid-cols-12 grid-rows-1">
             
-                {!(small && currentChat) && <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange} setShowAddContact={setShowAddContact}/>}
+                {!(small && currentChat) && <Contacts  currentUser={currentUser} changeChat={handleChatChange} setShowAddContact={setShowAddContact}/>}
         
            
                 {currentChat && <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} changeChat={handleChatChange}/>}

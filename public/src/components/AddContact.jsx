@@ -3,10 +3,10 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 
 import { useState } from "react";
 import axios from "axios";
-import {searchContact} from "../utils/APIRoutes";
-import {useDispatch} from "react-redux";
+import {searchContact,addContactRoute} from "../utils/APIRoutes";
+import {useDispatch, useSelector} from "react-redux";
 
-import {updateContacts} from "../feature/contactSlice"
+import {fetchContacts} from "../feature/contactSlice"
 
 
 function AddContact({setShowAddContact}){
@@ -15,6 +15,7 @@ function AddContact({setShowAddContact}){
     const [query,setQuery]=useState();
 
     const dispatch=useDispatch();
+    const {user}=useSelector((state=>{return state.contacts}));
 
 
     function searchUser(){
@@ -31,13 +32,22 @@ function AddContact({setShowAddContact}){
     }
 
     function handleSelection(id=null){
-        dispatch(updateContacts(id));
+        axios.post(addContactRoute,{id:user._id,contactId:id})
+        .then((res)=>{
+            console.log(res);
+          //  user.contacts.push(id);
+          localStorage.setItem('chat-app-user',res.data.user);
+            dispatch(fetchContacts([...user.contacts,id]));
+        }).catch((err)=>{
+            console.log(err);
+        })
         setShowAddContact(prev=>{
             return !prev;
         })
     }
 
-    return<div className="w-[90%] sm:w-[50%] h-[80%] absolute bg-white border rounded-md shadow-md border-gray-600 z-50 pb-8 px-4">
+    return<div className="w-[95%] md:w-[70%] h-[80%] absolute bottom-0 bg-white border rounded-t-3xl shadow-md shadow-slate-800 border-none z-50 pb-8 px-4 flex justify-center addContactWindow">
+        <div className="w-full sm:w-[50%] h-full">
         <div className="w-full flex justify-end my-4"><button
         onClick={()=>{
             setShowAddContact(prev=>{
@@ -61,12 +71,13 @@ function AddContact({setShowAddContact}){
             {searchResult && searchResult.map((result,index)=>{
                 return <div key={index} className="flex w-[90%] h-16 items-center gap-4 my-4 border px-4 py-2 border-box bg-white rounded-md hover:scale-110"
                 onClick={()=>{
-                    handleSelection();
+                    handleSelection(result._id);
                 }}>
                     <img src={`data:image/svg+xml;base64,${result.avatarImage}`} className="max-h-[90%]"/>
                     {result.username}
                 </div>
             })}
+        </div>
         </div>
     </div>
 }

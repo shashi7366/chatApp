@@ -54,5 +54,22 @@ overflow: hidden;
     background-repeat: no-repeat;
 }
 
+.addContactWindow{
+    animation-duration: 3s;
+    animation-name: slideUp;
+}
+
+@keyframes slideUp {
+    from{
+        top: 100%;
+        
+    }
+    to{
+        top:20%;
+        
+    }
+    
+}
+
 
 

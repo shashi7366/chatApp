@@ -1,20 +1,35 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice,createAsyncThunk} from "@reduxjs/toolkit";
+import {getAllContacts} from "../utils/APIRoutes";
+import axios from "axios";
 
 
 const initialState={
-    contacts:[]
+    user:undefined,
+    contactDetails:[]
 };
+
+
+export const fetchContacts=createAsyncThunk('contacts/fetchContacts',async (contacts)=>{
+    return axios.post(getAllContacts,{contacts});
+})
 
 
 const contactSlice=createSlice({
     name:"contacts",
     initialState,
     reducers:{
-        updateContacts:(state,action)=>{
-            state.contacts.push(action.payload);
+        updateUser:(state,action)=>{
+            state.user=action.payload;
         }
+    },
+    extraReducers:(builder)=>{
+        builder.addCase(fetchContacts.fulfilled,(state,action)=>{
+            console.log(action.payload);
+            state.contactDetails=action.payload.data.users;
+        })
     }
 });
 
 export default contactSlice.reducer;
-export const {updateContacts}=contactSlice.actions;
+export const {updateUser}=contactSlice.actions;
+//fetchContacts=fetchContacts;
