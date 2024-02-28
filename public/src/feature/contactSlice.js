@@ -10,8 +10,13 @@ const initialState={
 
 
 export const fetchContacts=createAsyncThunk('contacts/fetchContacts',async (contacts)=>{
+    console.log(contacts);
     return axios.post(getAllContacts,{contacts});
 })
+
+// export const fetchUser=createAsyncThunk('contacts/fetchUser',async (id)=>{
+
+// })
 
 
 const contactSlice=createSlice({
@@ -20,6 +25,7 @@ const contactSlice=createSlice({
     reducers:{
         updateUser:(state,action)=>{
             state.user=action.payload;
+           // console.log(state.user)
         }
     },
     extraReducers:(builder)=>{

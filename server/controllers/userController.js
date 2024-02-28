@@ -113,9 +113,14 @@ module.exports.addContact=async (req,res,next)=>{
         const {id,contactId}=req.body;
         let user=await User.findById(id);
 
+        if(user.contacts.includes(contactId)){
+           return res.json({status:true});
+        }
+
         user.contacts.push(contactId);
         user=await user.save();
 
+        user=await User.findById(id);
         res.json({status:true,user});
     }catch(exp){
         next(exp);

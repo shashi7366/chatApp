@@ -6,7 +6,7 @@ import axios from "axios";
 import {searchContact,addContactRoute} from "../utils/APIRoutes";
 import {useDispatch, useSelector} from "react-redux";
 
-import {fetchContacts} from "../feature/contactSlice"
+import {fetchContacts,updateUser} from "../feature/contactSlice"
 
 
 function AddContact({setShowAddContact}){
@@ -32,15 +32,19 @@ function AddContact({setShowAddContact}){
     }
 
     function handleSelection(id=null){
-        axios.post(addContactRoute,{id:user._id,contactId:id})
-        .then((res)=>{
-            console.log(res);
-          //  user.contacts.push(id);
-          localStorage.setItem('chat-app-user',JSON.stringify(res.data.user));
-            dispatch(fetchContacts([...user.contacts,id]));
-        }).catch((err)=>{
-            console.log(err);
-        })
+        if(!user.contacts.includes(id)){
+            axios.post(addContactRoute,{id:user._id,contactId:id})
+            .then((res)=>{
+                console.log(res);
+              //  user.contacts.push(id);
+              localStorage.setItem('chat-app-user',JSON.stringify(res.data.user));
+              dispatch(updateUser(res.data.user));
+                dispatch(fetchContacts([...res.data.user.contacts]));
+            }).catch((err)=>{
+                console.log(err);
+            })
+        }
+       
         setShowAddContact(prev=>{
             return !prev;
         })

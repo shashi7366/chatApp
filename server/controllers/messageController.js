@@ -1,10 +1,18 @@
 const Message=require("../model/messageModel");
+const User=require("../model/userModel");
 
 
 module.exports.addMessage=async (req,res,next)=>{
     try{
 
         const {to,from,msg}=req.body;
+
+//Check if sender is in contact list of receiver
+        const receiver=await User.findById(to);
+        if(!receiver.contacts.includes(from)){
+            receiver.contacts.push(from);
+            await receiver.save();
+        }
 
         const ack=await Message.create({
             message:{text:msg},

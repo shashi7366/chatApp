@@ -1,12 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { io } from "socket.io-client"
-import { allUserRoute, host } from "../utils/APIRoutes";
-=======
 import {io} from "socket.io-client"
 import { allUserRoute,host,getAllContacts } from "../utils/APIRoutes";
->>>>>>> refs/remotes/origin/main
 import Contacts from "../components/Contacts";
 import AddContact from "../components/AddContact";
 import ChatContainer from "../components/ChatContainer";
@@ -28,10 +23,6 @@ function Chat() {
     const navigate=useNavigate();
     const socket=useRef();
 
-<<<<<<< HEAD
-    useEffect(() => {
-        if (!localStorage.getItem("chat-app-user")) {
-=======
     const dispatch=useDispatch();
     // let contactsFromStore=useSelector((state)=>{
     //     return state.contacts.contactDetails;
@@ -39,7 +30,6 @@ function Chat() {
 
     useEffect(()=>{
         if(!localStorage.getItem("chat-app-user")){
->>>>>>> refs/remotes/origin/main
             navigate("/login");
         } else {
             setCurrentUser(JSON.parse(localStorage.getItem("chat-app-user")));
