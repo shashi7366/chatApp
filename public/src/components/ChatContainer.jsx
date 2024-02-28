@@ -72,7 +72,7 @@ function ChatContainer({currentChat,currentUser,socket,changeChat}){
 
     let prev;
 
-    return <div className="h-full col-span-12 sm:col-span-8 row-span-1 border-l-2 border-gray-600 flex flex-col justify-between pb-0 subcontainer2 relative">
+    return <div className="h-full max-h-[90%] col-span-12 sm:col-span-8 row-span-1 border-l-2 border-gray-600 flex flex-col justify-between pb-0 subcontainer2 relative">
 
         {/* chat header */}
         <div className="w-full h-[10%] grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0]">
@@ -91,7 +91,7 @@ function ChatContainer({currentChat,currentUser,socket,changeChat}){
         </div>
 
         {/* chat messages */}
-        <div className="w-full min-h-[85%] flex flex-col justify-start overflow-auto">
+        <div className="w-full h-[90%] max-h-[90%] min-h-[90%] flex flex-col justify-start overflow-auto">
             {
                 messages.map((message)=>{
                     let flag=1;

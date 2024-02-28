@@ -42,7 +42,7 @@ export default function Contacts({  currentUser,changeChat,setShowAddContact}) {
                     contactsFromStore.map((contact,index) => {
                         return <div key={index} className={`w-full grid grid-cols-6 py-2 px-4 gap-4 items-center border border-b-2 ${currentlySelected==index?"bg-[#f3f4f6]":"bg-white"} hover:bg-gray-100 h-[10%]`}
                         onClick={()=>{setCurrentlySelected(index);changeChat(contact)}}>
-                            <img src={`data:image/svg+xml;base64,${contact.avatarImage}`} alt="contact's image" className="col-span-1" />
+                            <img src={`data:image/svg+xml;base64,${contact.avatarImage}`} alt="contact's image" className="col-span-1 w-12 h-12" />
                             <h2 className="text-xl">{contact.username}</h2>
                         </div>
                     })
