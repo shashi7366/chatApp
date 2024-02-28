@@ -26,7 +26,11 @@ const UserSchema=new mongoose.Schema({
     avatarImage:{
         type:String,
         default:""
-    }
+    },
+    contacts:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Users"
+    }]
 })
 
 module.exports=mongoose.model("Users",UserSchema);

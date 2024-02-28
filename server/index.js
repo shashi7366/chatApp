@@ -31,6 +31,11 @@ mongoose.connect(process.env.MONGO_URL,{
     console.log(error.message);
 });
 
+app.use((err,req,res,next)=>{
+    console.log(err.message);
+    res.status(500).send("internal server error");
+})
+
 const server=app.listen(process.env.PORT,()=>{
     console.log(`server started on port ${process.env.PORT}`);
 });

@@ -13,7 +13,7 @@ function Login() {
 
     useEffect(()=>{
         if(localStorage.getItem('chat-app-user')){
-            navigate("/");
+            navigate("/chat");
         }
     },[]);
 
@@ -54,7 +54,8 @@ function Login() {
 
             if(data.status===true){
                 localStorage.setItem("chat-app-user",JSON.stringify(data.user));
-                navigate("/");
+                toast.success("Login success! redirecting to chat page");
+                navigate("/chat");
             }
         }
     }
@@ -73,12 +74,14 @@ function Login() {
     }
 
 
-    return <div className="w-2/3 m-auto">
+    return <div className="lpContainer w-full h-screen flex flex-col justify-center">
+        <div className="w-[80%] sm:w-[40%] m-auto">
         <ToastContainer/>
-        <h1 className="font-normal text-3xl"><span className="text-5xl font-semibold">C</span>hat</h1>
+        
         <form 
-        className="flex flex-col items-center p-4 justify-between border w-full"
+        className="flex flex-col items-center p-4 justify-between border w-full pb-16 pt-8"
         onSubmit={handleSubmit}>
+            <h1 className="font-normal text-3xl"><span className="text-5xl font-semibold">C</span>hat</h1>
             <input
                 type="text"
                 placeholder="Username"
@@ -97,10 +100,11 @@ function Login() {
             />
 
             
-            <button type="submit" className="bg-green-300 px-4 py-2 border rounded-md my-2">Login</button>
+            <button type="submit" className="bg-green-300 px-4 py-2 border rounded-md my-2 hover:transform hover:scale-125">Login</button>
             <span>Don't have an account ? <Link to="/register" className="text-blue-600">Register</Link></span>
         </form>
         
+    </div>
     </div>;
 }
 

@@ -12,7 +12,7 @@ box-sizing: border-box;
 }
 
 
-body,button,input{
+h1,button,input{
 font-family: 'Josefin Sans', sans-serif;
 
 }
@@ -27,6 +27,9 @@ overflow: hidden;
     min-width:100%;
     min-height:100vh;
     padding: 0;
+    display:flex;
+    flex-direction: column;
+    justify-content: centers;
 }
 
 .container{
@@ -42,6 +45,31 @@ overflow: hidden;
     height:100%;
 }
 
+
+.lpContainer{
+    background-image:linear-gradient(#12aa81,#11d7a2),linear-gradient(#ffffff,#ffffff);
+    background-origin: border-box;
+    background-position:top 0%,top 60%;
+    background-size:100% 20%,100%;
+    background-repeat: no-repeat;
+}
+
+.addContactWindow{
+    animation-duration: 3s;
+    animation-name: slideUp;
+}
+
+@keyframes slideUp {
+    from{
+        top: 100%;
+        
+    }
+    to{
+        top:20%;
+        
+    }
+    
+}
 
 
 

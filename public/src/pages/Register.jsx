@@ -13,7 +13,7 @@ function Register() {
 
     useEffect(()=>{
         if(localStorage.getItem('chat-app-user')){
-            navigate("/");
+            navigate("/chat");
         }
     },[]);
 
@@ -56,7 +56,8 @@ function Register() {
 
             if(data.status===true){
                 localStorage.setItem("chat-app-user",JSON.stringify(data.user));
-                navigate("/");
+                toast("Registeration Success! Redirecting to chat page.",toastOptions);
+                navigate("/chat");
             }
         }
     }
@@ -81,7 +82,8 @@ function Register() {
     }
 
 
-    return <div className="w-2/3 m-auto">
+    return <div className="w-full h-screen lpContainer flex flex-col justify-center">
+        <div className="w-2/3 m-auto">
         <ToastContainer/>
         <h1 className="font-normal text-3xl"><span className="text-5xl font-semibold">C</span>hat</h1>
         <form 
@@ -120,6 +122,7 @@ function Register() {
             <span>Already have an account ? <Link to="/login" className="text-blue-600">Login</Link></span>
         </form>
         
+    </div>
     </div>;
 }
 

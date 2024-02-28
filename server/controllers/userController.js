@@ -92,3 +92,43 @@ module.exports.getAllUsers=async (req,res,next)=>{
         next(error);
     }
 }
+
+
+module.exports.searchUser=async (req,res,next)=>{
+    try{
+
+        const {username}=req.body;
+
+        const users=await User.find({username}).populate("contacts").select("-password");
+
+        res.json({status:true,users})
+
+    }catch(exp){
+        next(exp);
+    }
+}
+
+module.exports.addContact=async (req,res,next)=>{
+    try{
+        const {id,contactId}=req.body;
+        let user=await User.findById(id);
+
+        user.contacts.push(contactId);
+        user=await user.save();
+
+        res.json({status:true,user});
+    }catch(exp){
+        next(exp);
+    }
+}
+
+module.exports.findContacts=async (req,res,next)=>{
+    try{
+        const {contacts}=req.body;
+        let users=await User.find({_id:{$in:contacts}});
+
+        res.json({status:true,users});
+    }catch(exp){
+        next(exp);
+    }
+}

@@ -1,9 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+<<<<<<< HEAD
 import { io } from "socket.io-client"
 import { allUserRoute, host } from "../utils/APIRoutes";
+=======
+import {io} from "socket.io-client"
+import { allUserRoute,host,getAllContacts } from "../utils/APIRoutes";
+>>>>>>> refs/remotes/origin/main
 import Contacts from "../components/Contacts";
+import AddContact from "../components/AddContact";
 import ChatContainer from "../components/ChatContainer";
+import axios from "axios";
+
+
+import {useDispatch,useSelector} from "react-redux";
+import {fetchContacts,updateUser} from "../feature/contactSlice";
 
 
 
@@ -13,14 +24,26 @@ function Chat() {
     const [currentUser,setCurrentUser]=useState("");
     const [small,setSmall]=useState(true);
     const [currentChat,setCurrentChat]=useState(undefined);
+    const [showAddContact,setShowAddContact]=useState(false);
     const navigate=useNavigate();
     const socket=useRef();
 
+<<<<<<< HEAD
     useEffect(() => {
         if (!localStorage.getItem("chat-app-user")) {
+=======
+    const dispatch=useDispatch();
+    // let contactsFromStore=useSelector((state)=>{
+    //     return state.contacts.contactDetails;
+    // });
+
+    useEffect(()=>{
+        if(!localStorage.getItem("chat-app-user")){
+>>>>>>> refs/remotes/origin/main
             navigate("/login");
         } else {
             setCurrentUser(JSON.parse(localStorage.getItem("chat-app-user")));
+            dispatch(updateUser(JSON.parse(localStorage.getItem("chat-app-user"))));
         }
     }, []);
 
@@ -32,20 +55,24 @@ function Chat() {
     }, [currentUser])
 
 
-    useEffect(() => {
-        if (currentUser) {
-            if (currentUser.isAvatarImageSet) {
-                fetch(`${allUserRoute}/${currentUser._id}`)
-                    .then((res) => {
-                        return res.json();
-                    })
-                    .then((data) => {
-                        setContacts(data);
-                    })
-                    .catch((error) => {
-                        console.log("error in chat.jsx ", error.message);
-                    })
-            } else {
+    useEffect(()=>{
+        if(currentUser){
+            if(currentUser.isAvatarImageSet){
+                // fetch(`${allUserRoute}/${currentUser._id}`)
+                // axios.post(getAllContacts,{
+                //     contacts:currentUser.contacts
+                // })
+                // .then(({data})=>{
+                //     setContacts(data.users);
+                // })
+                // .catch((error)=>{
+                //     console.log("error in chat.jsx ",error.message);
+                // })
+
+                dispatch(fetchContacts(currentUser.contacts));
+                //dispatch(updateContacts(contactsFromStore));
+
+            }else{
                 navigate("/setAvatar");
             }
         }
@@ -80,10 +107,11 @@ function Chat() {
        // console.log(chat);
         setCurrentChat(chat);
     }
-    return <div className="min-w-full h-screen max-h-screen flex flex-col justify-center gap-1 items-center bg-[#10b981] px-4">
-        <div className="w-full  h-[90%] max-h-[90%] bg-white grid grid-cols-12 grid-rows-1">
+    return <div className="min-w-full h-dvh max-h-[90%] flex flex-col justify-center gap-1 items-center bg-[#10b981] relative">
+        {showAddContact && <AddContact setShowAddContact={setShowAddContact}/>}
+        <div className="w-full  h-[98%] max-h-[98%] bg-white grid grid-cols-12 grid-rows-1">
             
-                {!(small && currentChat) && <Contacts contacts={contacts} currentUser={currentUser} changeChat={handleChatChange}/>}
+                {!(small && currentChat) && <Contacts  currentUser={currentUser} changeChat={handleChatChange} setShowAddContact={setShowAddContact}/>}
         
            
                 {currentChat && <ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} changeChat={handleChatChange}/>}
