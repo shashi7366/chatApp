@@ -75,7 +75,7 @@ function ChatContainer({currentChat,currentUser,socket,changeChat}){
     return <div className="h-full col-span-12 sm:col-span-8 row-span-1 border-l-2 border-gray-600 flex flex-col justify-between pb-0 subcontainer2 relative">
 
         {/* chat header */}
-        <div className="w-full h-[10%] grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0] absolute top-0">
+        <div className="w-full h-[10%] grid grid-cols-12 gap-2 items-center py-3 px-4 bg-[#e2e8f0]">
             <FaArrowLeft onClick={()=>{
                 changeChat(null);
             }}/>
